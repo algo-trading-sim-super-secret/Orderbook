@@ -14,7 +14,8 @@ void Orderbook::PruneGoodForDayOrders()
 		const auto now = system_clock::now();
 		const auto now_c = system_clock::to_time_t(now);
 		std::tm now_parts;
-		localtime_s(&now_parts, &now_c);
+		/*localtime_s(&now_parts, &now_c);*/
+        localtime_r(&now_c,&now_parts); // [][] Microsoft uses _s, linux uses _r
 
 		if (now_parts.tm_hour >= end.count())
 			now_parts.tm_mday += 1;
@@ -41,7 +42,7 @@ void Orderbook::PruneGoodForDayOrders()
 
 			for (const auto& [_, entry] : orders_)
 			{
-				const auto& [order, _] = entry;
+				const auto& [order, __] = entry;
 
 				if (order->GetOrderType() != OrderType::GoodForDay)
 					continue;

@@ -12,6 +12,7 @@
 #include "OrderbookLevelInfos.h"
 #include "Trade.h"
 
+#include <atomic>
 class Orderbook
 {
 private:
